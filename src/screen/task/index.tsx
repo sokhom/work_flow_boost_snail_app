@@ -63,9 +63,10 @@ const MyTasks: React.FC<Props> = (props) => {
       <ListItem
           style={[styles.task,{width: widthTask}]}
           key={itemData.index}
-          // leftAvatar={{ source: { uri: itemData.item.avatar_url } }}
+          leftAvatar={{ source: { uri: itemData.item.avatar_url } , avatarStyle:{paddingRight:20}}}
           title={itemData.item.name}
           subtitle={itemData.item.subtitle}
+          
           // topDivider = {false}
           onPress = {()=>onItermPress(props,itemData.item)}          
           
