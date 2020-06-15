@@ -5,7 +5,7 @@ import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation'
 import { Header } from 'react-native/Libraries/NewAppScreen'
 import HeaderButton from '../components/HeaderButton'
-import Checkout from '../screen/checkout'
+import MyTasks from '../screen/task'
 
 import {
   createStackNavigator,
@@ -25,17 +25,6 @@ interface Props1 {
 }
 
 
-
-const checkOut: React.FC<Props> = (props) => {
-  
-  return (
-    <View>
-      <Checkout {...props}>   
-       
-      </Checkout>      
-    </View>
-  )
-}
 
 const myModal: React.FC<Props> = (props) =>{
   const [modalVisible, SetModalVisible] = useState(true)
@@ -57,32 +46,23 @@ const myModal: React.FC<Props> = (props) =>{
 const navigationOptionsa = (navData: any,props: Props1) => {
     // console.log(navData)
     return {
-        headerTitle: 'CheckOut',
+        headerTitle: 'Tasks',
         headerLeft: (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item 
-                    title='Menu'
-                    iconName='ios-menu'
-                    onPress={()=>{navData.navigation.toggleDrawer()}}
-                />
-            </HeaderButtons>
+             <Icon  style={{padding: 10}} name='ios-menu' size= {23} type='ionicon' 
+              onPress={()=>{navData.navigation.toggleDrawer()}}
+             >Menu</Icon>
         ),
         headerRight: (
-            <HeaderButtons HeaderButtonComponent={HeaderButton}>
-                <Item 
-                    title='More'
-                    iconName='ios-more'                    
-                    onPress={()=> {navData.navigation.navigate('MyModal',{goBack:'Checkout'})}}
-                />
-               
-            </HeaderButtons>
+            <Icon  style={{padding: 10}} name='ios-add' size= {23} type='ionicon' 
+              onPress = {() => {}}
+            >add</Icon>
         )
     }    
 }
 const config = (props: Props1) => {
   return {
-    Checkout: {
-      screen: checkOut,
+    MyTasks: {
+      screen: MyTasks,
       navigationOptions: (navData: any) =>  navigationOptionsa(navData,{...props})
     }
  }
@@ -92,10 +72,10 @@ const props = {
     console.log('Helllo')
   }
 }
-const CheckOutNav1 = createStackNavigator(config({...props}))
-const ModalScreen = createStackNavigator({
-  CheckoutNav: {
-    screen: CheckOutNav1
+const MainStack = createStackNavigator(config({...props}))
+const MyTaskStack = createStackNavigator({
+  MyTasks: {
+    screen: MainStack
   },
   MyModalCheckOut: {
     screen: myModal
@@ -105,4 +85,4 @@ const ModalScreen = createStackNavigator({
   headerMode: 'none',
 })
 
-export default ModalScreen
+export default MyTaskStack

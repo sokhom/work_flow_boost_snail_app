@@ -13,7 +13,7 @@ import HomeScreen from '../screen/HomeScreen'
 import Setting from '../screen/Setting'
 import Colors from '../constants/Colors'
 import CustomerNav from '../navigation/CustomerNav'
-import CheckOutNav from '../navigation/CheckOutNav'
+import MyTaskStack from './MyTaskNav'
 import ItemNav from '../navigation/ItemNav'
 
 // import RNPopoverMenu from 'react-native-popover-menu'
@@ -54,10 +54,10 @@ const HomeTabNavigation = createBottomTabNavigator(
 )
 
 const MainNavigation = createDrawerNavigator({
-    CheckOut: {
-        screen: CheckOutNav,
+    MyTasks: {
+        screen: MyTaskStack,
         navigationOptions: {
-            drawerLabel: 'CheckOut',
+            drawerLabel: 'My Tasks',
         }
     },
     Customer: {
