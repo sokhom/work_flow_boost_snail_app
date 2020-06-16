@@ -1,11 +1,13 @@
-import React ,{useState} from 'react'
+import React ,{useState, useEffect} from 'react'
 import { View, StyleSheet ,Modal, Button} from 'react-native'
 import { Text, Icon } from 'react-native-elements'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { NavigationScreenProp, NavigationState, NavigationParams } from 'react-navigation'
 import { Header } from 'react-native/Libraries/NewAppScreen'
 import HeaderButton from '../components/HeaderButton'
+import  ModalStack,{ModalStackProps} from '../components/ModalStack'
 import MyTasks from '../screen/task'
+import TaskDetail from '../screen/task/TaskDetail'
 
 import {
   createStackNavigator,
@@ -26,25 +28,21 @@ interface Props1 {
 
 
 
-const myModal: React.FC<Props> = (props) =>{
-  const [modalVisible, SetModalVisible] = useState(true)
+
+const taskDetailModal: React.FC<ModalStackProps> = (props) => {  
+  const [taskId, setTaskId] = useState('')
+  useEffect(()=>{
+    const title = props.navigation.getParam('TASK_ID')
+    setTaskId(title || null)
+  },[])
   return (
-    <View  
-      style={{width:'20%', height:'40%',
-        backgroundColor:'red',
-        margin: 15
-      }}
-    >
-      <Button
-        title = 'Close Modal'
-        onPress = {()=> props.navigation.goBack()}
-      />
-        <Text>HHHHHH</Text>
-      </View>
+    <ModalStack {...props} header={taskId?taskId:'Create New Task'}>          
+      <TaskDetail {...props}/>
+    </ModalStack>
   )
 }
-const navigationOptionsa = (navData: any,props: Props1) => {
-    // console.log(navData)
+
+const navigationOptionsa = (navData: any,props: Props1) => {    
     return {
         headerTitle: 'Tasks',
         headerLeft: (
@@ -77,8 +75,8 @@ const MyTaskStack = createStackNavigator({
   MyTasks: {
     screen: MainStack
   },
-  MyModalCheckOut: {
-    screen: myModal
+  TaskDetailModal: {
+    screen: taskDetailModal
   }
 }, {
   mode: 'modal',
